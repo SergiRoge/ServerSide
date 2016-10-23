@@ -4,20 +4,29 @@ include('C:\xampp\htdocs\TFG\ServerSide\Auxiliar\Constants.php');
 
 class Connection
 {
-	function ConnectToServer()
+	private $servername = "localhost";
+	private $username = "root";
+	private $password = "";
+	private $database = "tfg";
+	
+	function Save($pstrQuery)
 	{
-		$servername = "localhost";
-		$username = "root";
-		$password = "";
+
 	
 		// Create connection
-		$conn = new mysqli($servername, $username, $password);
+		$conn = new mysqli($this->servername, $this->username, $this->password, $this->database);
 	
 		// Check connection
 		if ($conn->connect_error) 
 		{
 			die("Connection failed: " . $conn->connect_error);
 		}
+		if (!$resultado = $conn->query($pstrQuery)) 
+		{
+			echo $conn->errno;
+			exit;
+		}	
+		
 		return OK;
 	}
 		

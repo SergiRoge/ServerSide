@@ -9,24 +9,21 @@
 	/**
 	*	Getting all the data from the client side
 	*/
-	$name = htmlspecialchars($_POST["name"]);
-	$password = htmlspecialchars($_POST["password"]);
-	$email = htmlspecialchars($_POST["email"]);
+	//$UserName = htmlspecialchars($_POST["name"]);
+	//$Password = htmlspecialchars($_POST["password"]);
+	//$Email = htmlspecialchars($_POST["email"]);
 		
-	/**
-	*	Creating the connection with de database
-	*/
-	
-	$connection = new Connection;
-	$a = $connection->ConnectToServer();
-	
+
+	$UserName = "pepe";		
+	$Password = "pepe";		
+	$Email = "pepe";
 	/**
 	*	Creating the User object
 	*/
 
-	$user = new User;
-	
-	
+	$user = new User($UserName, $Password, $Email );
+	          
+	$user->saveUser();	   
 	
 	
 	//echo $a;
