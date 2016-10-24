@@ -16,6 +16,7 @@ class User extends SQLObject
 	{
 		$strQuery = "INSERT INTO tUsers(UserName,Password,Email) VALUES('$this->UserName','$this->Password','$this->Email')";	
 		$return = parent::save($strQuery);
+		return $return;
 	}
 	
 	

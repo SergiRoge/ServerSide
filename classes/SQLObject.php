@@ -11,14 +11,14 @@ class SQLObject
 		*	Creating the connection with de database
 		*/
 		$connection = new Connection;
-		$a = $connection->Save($strQuery);			
+		$return = $connection->Save($strQuery);			
 		
 		
 		
 		
 		
 		
-		return 1;
+		return $return;
 	}
 
 	

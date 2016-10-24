@@ -23,7 +23,8 @@ class Connection
 		}
 		if (!$resultado = $conn->query($pstrQuery)) 
 		{
-			echo $conn->errno;
+			
+			return $conn->errno;
 			exit;
 		}	
 		
