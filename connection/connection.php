@@ -9,7 +9,8 @@ class Connection
 	private $password = "";
 	private $database = "tfg";
 	
-	function Save($pstrQuery)
+	
+	function ExecuteQuery($pstrQuery)
 	{
 
 	
@@ -21,15 +22,18 @@ class Connection
 		{
 			die("Connection failed: " . $conn->connect_error);
 		}
-		if (!$resultado = $conn->query($pstrQuery)) 
+		if (!$result = $conn->query($pstrQuery)) 
 		{
 			
 			return $conn->errno;
 			exit;
 		}	
+
 		
-		return OK;
+		
+		return $result;
 	}
+	
 		
 }
 

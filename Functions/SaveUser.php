@@ -4,24 +4,24 @@
 	include('C:\xampp\htdocs\TFG\ServerSide\classes\User.php');
 	
 	
-	$UserName = "pepe";		
-	$Password = "pepe";		
-	$Email = "pepe";
-	
-	
+	//$UserName  ="pepe";
+	///$Password  ="pepe";
+	//$Email ="pepe";
 	$UserName = htmlspecialchars($_POST["name"]);
 	$Password = htmlspecialchars($_POST["password"]);
 	$Email = htmlspecialchars($_POST["email"]);
 	
+
+	$EncryptedPassword = hash(ENCRYPTION_ALGORITHM ,$Password );
+	
 	/**
 	*	Creating the User object
 	*/
-	$user = new User($UserName, $Password, $Email );
+	$user = new User($UserName, $EncryptedPassword, $Email );
 	          
 	$return = $user->saveUser();
+	
 	echo $return;
-	
-	
 	/*
 	
 	if(function_exists($_POST['f'])) 

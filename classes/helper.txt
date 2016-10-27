@@ -5,7 +5,6 @@ class SQLObject
 	private $URL;
 	
 	
-	
 	function ExecuteQuery($strQuery)
 	{
 		/**
@@ -15,8 +14,8 @@ class SQLObject
 		$return = $connection->ExecuteQuery($strQuery);			
 		
 		return $return;
-	}	
-	
+	}
+
 	
 	
 	
