@@ -1,0 +1,26 @@
+ <?php
+
+ include($_SERVER['DOCUMENT_ROOT'].'\TFG\ServerSide\classes\SQLObject.php');
+class Coordinate extends SQLObject
+{
+	private $XCoord;
+	private $YCoord;
+	
+
+	function __construct($pXCoord,$pYCoord) 
+	{
+		$this->XCoord = $pXCoord;
+		$this->YCoord = $pYCoord;
+	}
+	function saveCoord($pIDItem)
+	{
+		$strQuery = "INSERT INTO tCoordinate (IDItem, XCoord, YCoord) 
+						VALUES('$pIDItem','$this->XCoord','$this->YCoord')";	
+		$strSQL_result = parent::ExecuteQuery($strQuery);
+		return $strSQL_result;
+	}
+
+	 
+}
+
+?> 

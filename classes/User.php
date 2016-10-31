@@ -1,12 +1,12 @@
  <?php
- include('C:\xampp\htdocs\TFG\ServerSide\classes\SQLObject.php');
+ include($_SERVER['DOCUMENT_ROOT'].'\TFG\ServerSide\classes\SQLObject.php');
 class User extends SQLObject
 {
 	private $UserName;
 	private $Email;
 	private $Password;
 	
-	
+	private $ItemList = array();
 	
 	
 	function __construct($pUserName,$pPassword,$pEmail) 
@@ -36,6 +36,35 @@ class User extends SQLObject
 		
 	}
 	
+	function GetItemList()
+	{
+		$strQuery  = "SELECT C.XCoord As XCoord, C.YCoord As YCoord,I.type As Type, I.brand As Brand, I.material As Material, I.color As Color, I.whenDate As When, I.foundlost As FoundLost
+						FROM 
+						tCoordinate C, tItems I 
+						WHERE I.UserID = (SELECT ID FROM tUsers WHERE Email = '$this->Email') 
+							AND I.itemStatus = 0";
+							
+							
+		$strSQL_result = parent::ExecuteQuery($strQuery);	
+		
+		$array[] = "item";
+		$array[$key] = "item";
+		array_push($array, "item", "another item");
+				
+		while ($data = $strSQL_result->fetch_array(MYSQLI_ASSOC)) 
+		{
+			printf("ID: %s  Nombre: %s", $data["XCoord"], $data["nombre"]);
+		}
+	
+		
+		
+		$arr = array('UserName' => $data["UserName"]);
+
+		return json_encode($arr);	
+		
+	
+	
+	}
 	
 }
 

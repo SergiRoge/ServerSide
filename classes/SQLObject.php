@@ -1,9 +1,13 @@
  <?php
+
+
+
+ 
 class SQLObject
 {
 	
 	private $URL;
-	
+	private $connection;
 	
 	
 	function ExecuteQuery($strQuery)
@@ -11,11 +15,17 @@ class SQLObject
 		/**
 		*	Creating the connection with de database
 		*/
-		$connection = new Connection;
-		$return = $connection->ExecuteQuery($strQuery);			
+		$this->connection = new Connection;
+		$return = $this->connection->ExecuteQuery($strQuery);			
 		
 		return $return;
 	}	
+	
+	
+	function last_inserted_id()
+	{
+		return $this->connection->last_inserted_id();
+	}
 	
 	
 	

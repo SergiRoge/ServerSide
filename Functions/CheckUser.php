@@ -1,7 +1,7 @@
 <?php
 	
-	include('C:\xampp\htdocs\TFG\ServerSide\connection\connection.php');
-	include('C:\xampp\htdocs\TFG\ServerSide\classes\User.php');
+	include($_SERVER['DOCUMENT_ROOT'].'\TFG\ServerSide\connection\connection.php');
+	include($_SERVER['DOCUMENT_ROOT'].'\TFG\ServerSide\classes\User.php');
 	
 	
 	$UserName = "";		
@@ -19,7 +19,8 @@
 	$user = new User($UserName, $EncryptedPassword, $Email );
 	
 	$JSON_userName = $user->checkUser();	
-
+	$JSON_ItemList = $user->GetItemList();
+	
 	echo $JSON_userName;
 	
 ?>

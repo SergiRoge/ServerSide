@@ -1,6 +1,6 @@
 
 <?php
-include('C:\xampp\htdocs\TFG\ServerSide\Auxiliar\Constants.php');
+include($_SERVER['DOCUMENT_ROOT'].'\TFG\ServerSide\Auxiliar\Constants.php');
 
 class Connection
 {
@@ -9,6 +9,7 @@ class Connection
 	private $password = "";
 	private $database = "tfg";
 	
+	private $IDLastInsert;
 	
 	function ExecuteQuery($pstrQuery)
 	{
@@ -28,12 +29,18 @@ class Connection
 			return $conn->errno;
 			exit;
 		}	
-
+		
+		$this->IDLastInsert = mysqli_insert_id($conn);
 		
 		
 		return $result;
 	}
 	
+	
+	function last_inserted_id()
+	{
+		return $this->IDLastInsert;
+	}
 		
 }
 
