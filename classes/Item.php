@@ -54,6 +54,41 @@ class Item extends SQLObject
 		return $strSQL_result;
 	}
 	
+	function retrieveCoordinateList($pID)
+	{
+		
+		$strQuery = "SELECT XCoord, YCoord FROM tCoordinate WHERE IDItem = '$pID'";								
+					
+		$strSQL_result = parent::ExecuteQuery($strQuery);	
+		$i = 0;
+		while ($data = $strSQL_result->fetch_array(MYSQLI_ASSOC)) 
+		{
+			$XCoord = $data["XCoord"];
+			$YCoord = $data["YCoord"];
+			
+			$coordinate = new Coordinate($XCoord,$YCoord);
+			$this->CoordinatesList[] = $coordinate->json_encode_coordinate();
+			$i = $i + 1;
+	
+		}			
+	}
+	function json_encode_item()
+	{		
+		$array = ["ItemType" => $this->ItemType,
+							'Brand' => $this->Brand,
+							'Material' => $this->Material,
+							'Color' => $this->Color,
+							'When' => $this->When,
+							'FoundLost' => $this->FoundLost,
+							'Description' => $this->Description,
+							'Status' => $this->Status,
+							'CoordinatesList' => $this->CoordinatesList];
+							
+		//return json_encode($array);
+			return $array;
+							
+	}
+	
 	//$pCoordinatesList format : [Xcoord1,Ycoord1,XCoord2,Ycoord2,XCoord3,YCoord3]
 	function setCoordinateList($pCoordinatesList)
 	{

@@ -20,6 +20,13 @@ class Coordinate extends SQLObject
 		return $strSQL_result;
 	}
 
+	
+	function json_encode_coordinate()
+	{		
+		$array = ['XCoord' => $this->XCoord,'YCoord' => $this->YCoord];
+		//return json_encode($array);
+		return $array;
+	}
 	 
 }
 

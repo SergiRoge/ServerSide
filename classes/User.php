@@ -1,5 +1,5 @@
  <?php
- include($_SERVER['DOCUMENT_ROOT'].'\TFG\ServerSide\classes\SQLObject.php');
+ include($_SERVER['DOCUMENT_ROOT'].'\TFG\ServerSide\classes\Item.php');
 class User extends SQLObject
 {
 	private $UserName;
@@ -30,37 +30,44 @@ class User extends SQLObject
 		
 		$data = $strSQL_result->fetch_array(MYSQLI_ASSOC);
 		
-		$arr = array('UserName' => $data["UserName"]);
+		$this->UserName = $data["UserName"];
+		return $this->UserName;
 
-		return json_encode($arr);	
 		
 	}
 	
 	function GetItemList()
 	{
-		$strQuery  = "SELECT C.XCoord As XCoord, C.YCoord As YCoord,I.type As Type, I.brand As Brand, I.material As Material, I.color As Color, I.whenDate As When, I.foundlost As FoundLost
-						FROM 
-						tCoordinate C, tItems I 
-						WHERE I.UserID = (SELECT ID FROM tUsers WHERE Email = '$this->Email') 
-							AND I.itemStatus = 0";
+
 							
+		$strQuery = "SELECT I.ID As ID, I.type As Type, I.brand As Brand, I.material As Material, I.color As Color, I.whenDate As WhenDate, I.foundlost As FoundLost, I.Description As Description FROM tItems I WHERE I.UserID = (SELECT ID FROM tUsers WHERE Email = 'aaaa@gmail.com') AND I.itemStatus = 0";								
 							
 		$strSQL_result = parent::ExecuteQuery($strQuery);	
 		
-		$array[] = "item";
-		$array[$key] = "item";
-		array_push($array, "item", "another item");
 				
+		$this->ItemList[] = ["UserName" => $this->UserName];		
+			
 		while ($data = $strSQL_result->fetch_array(MYSQLI_ASSOC)) 
 		{
-			printf("ID: %s  Nombre: %s", $data["XCoord"], $data["nombre"]);
-		}
-	
-		
-		
-		$arr = array('UserName' => $data["UserName"]);
+			
+			
+			$Type = $data["Type"];
+			$Brand = $data["Brand"];
+			$Material = $data["Material"];
+			$Color = $data["Color"];
+			$When = $data["WhenDate"];
+			$FoundLost = $data["FoundLost"];
+			$Description = $data["Description"];
 
-		return json_encode($arr);	
+			$item = new Item($Type, $Brand, $Material, $Color, $When, $FoundLost, $Description);
+			$item->retrieveCoordinateList($data["ID"]);
+			
+			$this->ItemList[] = $item->json_encode_item();
+		}
+		//return json_encode($this->ItemList);
+		return $this->ItemList;
+		//echo $this->ItemList;
+		
 		
 	
 	
