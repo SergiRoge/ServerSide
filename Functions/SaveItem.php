@@ -1,47 +1,52 @@
 <?php
 	
-	include($_SERVER['DOCUMENT_ROOT'].'\TFG\ServerSide\connection\connection.php');
-	include($_SERVER['DOCUMENT_ROOT'].'\TFG\ServerSide\classes\Item.php');
-
-
+	include($_SERVER['DOCUMENT_ROOT'].'\TFG\ServerSide\Matching\Matching.php');
 
 	
 
+
 	$Email = "aaaa@gmail.com";
-	$Type = "Gafas";
-	$Brand = "RayBan";
-	$Material = "Cristal";
-	$Color = "Negro";
+	$Type = "Pimiento";
+	$Brand = "del piquillo";
+	$Material = "pimiento";
+	$Color = "Rojo";
 	$When = 0;
 	$FoundLost = "Lost";
 	$Description = "Tipicas gafas RayBan";
 	$NumOfCoords = 3;
 	
 	
-	/*
-	$Email = htmlspecialchars($_POST["Email"]);
-	$Type = htmlspecialchars($_POST["Type"]);
-	$Brand = htmlspecialchars($_POST["Brand"]);
-	$Material = htmlspecialchars($_POST["Material"]);
-	$Color = htmlspecialchars($_POST["Color"]);
-	$When = htmlspecialchars($_POST["When"]);
-	$FoundLost = htmlspecialchars($_POST["FoundLost"]);
-	$Description = htmlspecialchars($_POST["Description"]);
-	$NumOfCoords = $_POST["Coords"];
-	*/
+	$Email = htmlspecialchars($_POST["user"]);
+	$Type = htmlspecialchars($_POST["type"]);
+	$Brand = htmlspecialchars($_POST["brand"]);
+	$Material = htmlspecialchars($_POST["material"]);
+	$Color = htmlspecialchars($_POST["color"]);
+	$When = htmlspecialchars($_POST["when"]);
+	$FoundLost = htmlspecialchars($_POST["foundLost"]);
+	$Description = htmlspecialchars($_POST["description"]);
+	$NumOfCoords = $_POST["coordsnumber"];
+	
 	
 
 	
 	$CoordinatesList = array();
 	
-	for ($i = 0; $i < $NumOfCoords; $i++) 
+	if($NumOfCoords >= 1)
 	{
-		//$coord = new Coordinate($_POST["coordX"+$i],$_POST["coordY"+$i]);
-		//$coord = new Coordinate($i,$i);
-		$CoordinatesList[] = $i ;
-		$CoordinatesList[] = $i ;
-
+		$CoordinatesList[] = new Coordinate($_POST["coordX0"],$_POST["coordY0"]);		
 	}
+	
+	if($NumOfCoords >= 2)
+	{
+		$CoordinatesList[] = new Coordinate($_POST["coordX1"],$_POST["coordY1"]);		
+	}
+
+	if($NumOfCoords >= 3)
+	{
+		$CoordinatesList[] = new Coordinate($_POST["coordX2"],$_POST["coordY2"]);
+	}
+
+
 
 	
 	/**
@@ -54,6 +59,13 @@
 	          
 	$item->setCoordinateList($CoordinatesList);		  
 	$return = $item->saveItem($Email);
+	
+	//If the item was saved properly, the matching algorithm will launch
+	
+	
+	
+	
+	
 	
 	
 	echo $return;
