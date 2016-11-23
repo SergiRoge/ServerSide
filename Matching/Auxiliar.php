@@ -10,6 +10,10 @@ class Auxiliar
 
 	function construct_type_SQL($pstrValue)
 	{
+		if($pstrValue == "")
+		{
+			return "";
+		}
 		
 		$strQuery = " I.Type IN ";
 		
@@ -74,50 +78,46 @@ class Auxiliar
 	*/
 	function construct_date_SQL($pstrWhen, $pstrDate)
 	{
-		if($pstrValue == -1)
+		if($pstrWhen == 6 or $pstrWhen == 0)
 		{
-			return "";
+			return " ";
 		}
 		else
 		{	
 	
-				$date = new DateTime($pstrDate);
-				$intDate = $date->getTimestamp();
-	
-			switch ($i) {
+			switch ($pstrWhen) 
+			{
 				//Today
-			case 1:
-				//Si se ha perdido hoy, todos los items registrados desde ayer no se deben comprobar
-				$strQuery = " AND I.RegisterDate  ";
-				echo "i es igual a 0";
-				break;
-				//Yesterday
-			case 2:
-				echo "i es igual a 1";
-				break;
-				//2 days ago
-			case 3:
-				//Si se ha perdido hace dos dias , todos los items registrados desde hace 2 dias no se deben comprobar
-				echo "i es igual a 2";
-				break;
-				//A week ago
-			case 4:
-				echo "i es igual a 1";
-				break;
-				//A month ago
-			case 5:
-				echo "i es igual a 2";
-				break;
-}		
-	
-			if( in_array($pstrValue , array("Verde","Azul","Turquesa") ))
-			{
-				$strQuery = " AND I.Color IN  ('Verde', 'Azul', 'Turquesa') ";
-			}		
-			else
-			{
-				$strQuery = " AND I.Color = '$pstrValue' ";
-			}
+				case 1:
+					//Si se ha perdido hoy, todos los items registrados desde ayer no se deben comprobar
+					//El parametro del metodo viene del objeto perdido, el de la query es el posible candidato,
+					//por lo que, se tiene que cumplir que, 
+
+					break;
+					//Yesterday
+				case 2:
+					//Le resto un dia al timestamp, ya que se perdio ayer
+					$pstrDate = $pstrDate - 864000;
+					break;
+					//2 days ago
+				case 3:
+					//Si se ha perdido hace dos dias , todos los items registrados desde hace 2 dias no se deben comprobar
+					$pstrDate = $pstrDate - (864000 * 2);
+
+					break;
+					//A week ago
+				case 4:
+					$pstrDate = $pstrDate - (864000 * 7);
+					break;
+					//A month ago
+				case 5:
+					$pstrDate = $pstrDate - (864000 * 30);
+					break;
+			}			
+
+			$strQuery = " AND I.RegisterDate  > $pstrDate ";
+
+
 			return $strQuery;
 		}
 	}

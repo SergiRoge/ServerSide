@@ -91,13 +91,13 @@
 					//echo "caurto trozo : ", $strSQLItemAttributes;
 					$strSQLDate = $aux->construct_date_SQL($itemLost->When, $itemLost->RegisterDate);
 	
-					
+					$strSQLFinalPart = " AND I.itemStatus = 0 AND I.foundlost = 'Found' AND I.UserID <> $itemLost->UserID ";
 					
 					
 					
 					
 					//Este trozo de query, une todas las condiciones del WHERE
-					$strSQL2 = $strSQLType . $strSQLBrand . $strSQLMaterial . $strSQLColor .  " AND I.itemStatus = 0 AND I.foundlost = 'Found' AND I.UserID <> $itemLost->UserID ";
+					$strSQL2 = $strSQLType . $strSQLBrand . $strSQLMaterial . $strSQLColor . $strSQLDate . $strSQLFinalPart;
 					
 					//Este trozo de query, mira que estos 2 items no esten en la tabla de items que no coinciden(Por si en el pasado han coincidido y se descartó por parte de algun usuario)
 					$strSQL3 = " AND (SELECT COUNT(*) FROM tNonMatchingItems WHERE IDItemFound = $itemLost->ID) = 0 ";
@@ -136,7 +136,7 @@
 						if ($aux->coordinates_match($itemLost->CoordinatesList, $CoordinatesListFound) == 1)
 						{
 							//Si entro aqui, hemos encontrado un posible candidato
-							$strQuery = "INSERT INTO tMatchingItems (IDItemLost, IDItemFound, Temporal) VALUES ($itemLost->ID, $IDItem, 1)";
+							$strQuery = "INSERT INTO tMatchingItems (IDItemLost, IDItemFound, Waiting) VALUES ($itemLost->ID, $IDItem, 1)";
 							$connection->ExecuteQuery($strQuery);
 							echo "encaja";
 							
