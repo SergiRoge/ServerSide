@@ -6,8 +6,8 @@
 	$result = htmlspecialchars($_POST["result"]);
 	$rowID = htmlspecialchars($_POST["rowid"]);
 	
-	//$result="NO";
-	//$rowID = 11;
+	//$result="YES";
+	//$rowID = 13;
 	
 	$strQuery = "";
 	
@@ -23,10 +23,26 @@
 	{
 		$strQuery = "UPDATE tMatchingItems SET waiting = 0 WHERE ID = $rowID";
 		$return = $sqlObject->ExecuteQuery($strQuery);	
+		
+		$array = array();
+
+		$userID = "";
+
+		$strQuery3 = "SELECT Email, UserName FROM tUsers WHERE ID = ( SELECT UserID FROM tItems WHERE ID = (SELECT IDItemLost FROM tMatchingItems WHERE ID = $rowID))";
+	
+		$return = $sqlObject->ExecuteQuery($strQuery3);	
+		
+		while($data = $return->fetch_array())
+		{
+			
+			$array = ["Email" => $data['Email'], "UserName" => $data['UserName']];
+		}
+		
+		echo json_encode($array);
 	}
 	else if($result == "NO")
 	{
-		
+
 		
 		$strQuery2 = "insert into tNonMatchingItems (IDItemLost, IDItemFound) SELECT IDItemLost, IDItemFound FROM tMatchingItems WHERE id = $rowID";
 				
@@ -35,6 +51,10 @@
 		$strQuery = "DELETE FROM tMatchingItems WHERE ID = $rowID";	
 		
 		$return = $sqlObject->ExecuteQuery($strQuery);	
+		
+		
+		
+		
 	}
 	
 	
