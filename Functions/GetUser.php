@@ -8,8 +8,8 @@
 	$Password = "aaaa";
 	$Email = "aaaa@gmail.com";
 	
-	//$Email = $_POST["email"];
-	//$Password = $_POST["password"];
+	$Email = $_POST["email"];
+	$Password = $_POST["password"];
 	
 	$EncryptedPassword = hash(ENCRYPTION_ALGORITHM ,$Password );
 
@@ -27,9 +27,9 @@
 	else
 	{
 	
-		$JSON_ItemList = $user->GetItemList();
+		$JSON_User_Data = $user->GetUserData();
 		
-		echo json_encode($JSON_ItemList);
+		echo json_encode($JSON_User_Data);
 				
 		
 	}

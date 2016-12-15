@@ -3,8 +3,8 @@
 	 include($_SERVER['DOCUMENT_ROOT'].'\TFG\ServerSide\classes\SQLObject.php');
 
 	
-	$Email  = "aaaa@gmail.com";
-	//$Email = htmlspecialchars($_POST["email"]);
+	//$Email  = "aaaa@gmail.com";
+	$Email = htmlspecialchars($_POST["email"]);
 
 	$sqlObject = new SQLObject();
 	

@@ -100,8 +100,12 @@
 					$strSQL2 = $strSQLType . $strSQLBrand . $strSQLMaterial . $strSQLColor . $strSQLDate . $strSQLFinalPart;
 					
 					//Este trozo de query, mira que estos 2 items no esten en la tabla de items que no coinciden(Por si en el pasado han coincidido y se descartó por parte de algun usuario)
+					//Hay que cambiarlo un poco, ahora no sirve de nada, si existe, no lo compara, y deberia mirar que no exista el par itemLost-itemFound en la tabla
 					$strSQL3 = " AND (SELECT COUNT(*) FROM tNonMatchingItems WHERE IDItemFound = $itemLost->ID) = 0 ";
 					$strSQL4 = " AND (SELECT COUNT(*) FROM tMatchingItems WHERE IDItemFound = I.ID) = 0 ";
+					
+					
+					
 					$strSQL5 = " AND I.WhenDate <= $itemLost->When ";
 					$strQuery = "SELECT I.ID As IDMatchingItem FROM tItems I WHERE " . $strSQL2 . $strSQL3 . $strSQL4 . $strSQL5;
 					echo $strQuery;

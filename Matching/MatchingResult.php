@@ -32,7 +32,7 @@
 	
 		$return = $sqlObject->ExecuteQuery($strQuery3);	
 		
-		while($data = $return->fetch_array())
+		while($data = $return->fetch_array(MYSQLI_ASSOC))
 		{
 			
 			$array = ["Email" => $data['Email'], "UserName" => $data['UserName']];

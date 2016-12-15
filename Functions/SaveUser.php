@@ -3,9 +3,9 @@
 	include($_SERVER['DOCUMENT_ROOT'].'\TFG\ServerSide\connection\connection.php');
 	include($_SERVER['DOCUMENT_ROOT'].'\TFG\ServerSide\classes\User.php');
 
-	//$UserName  ="pepe";
-	///$Password  ="pepe";
-	//$Email ="pepe";
+	$UserName  = "3";
+	$Password  ="3";
+	$Email ="3";
 	$UserName = htmlspecialchars($_POST["name"]);
 	$Password = htmlspecialchars($_POST["password"]);
 	$Email = htmlspecialchars($_POST["email"]);
